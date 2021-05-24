@@ -1,10 +1,8 @@
 
 <form method="POST" class="mt-4">
   <div>
-    {{#if response.error}}
-		<p class="alert alert-primary" role="alert">Username or password is incorrect </p>
-    {{else}}
-    <p class="alert alert-primary" role="alert">ok</p>
+    {{#if error }}
+    <p class="alert alert-primary" role="alert">invalid useranme or password</p>
     {{/if}}
   </div>
   <div class="mb-3">

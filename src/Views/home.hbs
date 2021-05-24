@@ -1,4 +1,23 @@
-<h1>Home{{user.username}}</h1>
+
+{{#if error}}
+<p class="alert alert-primary" role="alert">Please Login ! </p>
+{{else}}
+<div class="card" style="width: 18rem;">
+  <img src="https://th.bing.com/th/id/Re128cff907cc9410e66c87fe767a227a?rik=FKziqiWImQniVw&pid=ImgRaw" class="card-img-top" alt="avartar">
+  <div class="card-body">
+    <h5 class="card-title">{{user.username}}</h5>
+    <p class="card-text">
+        <h1>{{user.phone}}</h1>
+        <h1>{{user.address}}</h1>
+    </p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+{{/if}}
+<h1>Wellcome!</h1>
+<h1>{{user.username}}</h1>
+
+
 <a href="/user/login">Login</a>
 <a href="/user/register">register</a>
 <a href="user/inf">Information</a>

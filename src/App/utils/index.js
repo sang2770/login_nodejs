@@ -9,7 +9,8 @@ module.exports={
     },
     Authenticated(req, res, next){
         if (!req.session.user) {
-          res.send("You're not allowed to view this content! please log in first!");
+        //   res.send("You're not allowed to view this content! please log in first!");
+            res.render("home", {error: true})
           return;
         }
         //else continue

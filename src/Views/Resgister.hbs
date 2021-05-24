@@ -1,4 +1,10 @@
 
+{{#if error}}
+  <p class="alert alert-primary" role="alert">Please Enter Full </p>
+{{/if}}
+{{#if exists}}
+  <p class="alert alert-primary" role="alert">username Esited </p>
+{{/if}}
 <form method="POST" class="mt-4">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>

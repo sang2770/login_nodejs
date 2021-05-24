@@ -25,40 +25,32 @@ class userControllers{
     //[POST] /register/pass
     async register(req, res, next)
     {
-        // // res.json(req.body);
-        // req.checkBody('username', 'Name is required').notEmpty();
-        // User.register(new User({username: req.body.username, password:req.body.password,phone:req.body.phone,address: req.body.address}),req.body.password,function(err,user){
-        //     if(err){
-        //         console.log(err);
-        //         res.render("Resgister", {err:"Empty"});
-        //     }
-        // passport.authenticate("local")(req,res,function(){
-        //     res.redirect("/user/login");
-        // })    
-        // })
-        const { username, password , phone, adđress} = req.body;
+        const { username, password , phone, address} = req.body;
 
         // check for missing filds
         if (!username || !password) {
-        res.send("Please enter all the fields");
+        // res.send("Please enter all the fields");
+        res.render("Resgister", {error:true})
         return;
         }
 
         const doesUserExitsAlreay = await User.findOne({ username });
 
         if (doesUserExitsAlreay) {
-        res.send("A user with that email already exits please try another one!");
+        // res.send("A user with that email already exits please try another one!");
+        res.render("Resgister", {exists:true})
         return;
         }
 
         // lets hash the password
         const hashedPassword = await bcrypt.hash(password, 12);
-        const latestUser = new User({ username, password: hashedPassword,phone, adđress });
+        const latestUser = new User({ username, password: hashedPassword,phone, address });
 
         latestUser
         .save()
         .then(() => {
-            res.send("registered account!");
+            // res.send("registered account!");
+            res.render("Login");
             return;
         })
         .catch((err) => console.log(err));
@@ -71,14 +63,15 @@ class userControllers{
 
         // check for missing filds
         if (!username || !password) {
-        res.send("Please enter all the fields");
+        res.redirect("back")
         return;
         }
 
         const doesUserExits = await User.findOne({ username });
 
         if (!doesUserExits) {
-        res.send("invalid username or password");
+        // res.send("invalid username or password");
+        res.render("Login",{error:MediaStreamTrackAudioSourceNode})
         return;
         }
 
@@ -88,13 +81,17 @@ class userControllers{
         );
 
         if (!doesPasswordMatch) {
-        res.send("invalid useranme or password");
+        // res.send("invalid useranme or password");
+        res.render("Login",{error:true})
         return;
         }
-
+        const phone=doesUserExits.phone;
+        const address= doesUserExits.address;
         // else he\s logged in
         req.session.user = {
             username,
+            phone,
+            address
         };
 
         res.redirect("/");
@@ -103,6 +100,7 @@ class userControllers{
     logout(req, res, next)
     {
         req.logout();
+        req.session.user=null;
         res.redirect("/");
     }
 
